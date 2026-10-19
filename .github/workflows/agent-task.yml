@@ -28,7 +28,7 @@ jobs:
       shell: bash
       run: |
         set -o pipefail
-        npx @github/copilot-cli \
+        copilot \
           -p "Summarize recent changes in this repository" \
           --allow-all-tools --no-ask-user \
           | tee copilot-summary.md
