@@ -1,3 +1,5 @@
+name: Agent Task
+
 on:
   workflow_dispatch:
   schedule:
