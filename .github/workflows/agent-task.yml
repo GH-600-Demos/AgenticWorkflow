@@ -33,7 +33,7 @@ jobs:
           --allow-all-tools --no-ask-user \
           | tee copilot-summary.md
       env:
-        COPILOT_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        COPILOT_GITHUB_TOKEN: ${{ secrets.COPILOT_CLI_TOKEN }}
 
     - name: Upload Copilot summary
       uses: actions/upload-artifact@v4
