@@ -1,0 +1,37 @@
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 9 * * *'
+
+permissions: 
+  contents: read
+
+jobs:
+  agent-task:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+    - name: Run Copilot CLI
+      shell: bash
+      run: |
+        set -o pipefail
+        npx @github/copilot-cli \
+          -p "Summarize recent changes in this repository" \
+          --allow-all-tools --no-ask-user \
+          | tee copilot-summary.md
+      env:
+        COPILOT_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Upload Copilot summary
+      uses: actions/upload-artifact@v4
+      with:
+        name: copilot-summary
+        path: copilot-summary.md
+        if-no-files-found: error
+        retention-days: 14
